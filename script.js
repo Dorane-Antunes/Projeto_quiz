@@ -105,15 +105,24 @@ const perguntas = [
 const perguntasQuiz = document.getElementById("assunto");
 const botãoRespostas = document.getElementById("respostas");
 const botãoProximo = document.getElementById("botao-proximo");
+const pontuacao= document.getElementsByClassName("pontos")[0]; 
 
 let indexPerguntaAtual = 0;
-let pontos = 0;
+let contador = 0;
 
 function startQuiz(){
     indexPerguntaAtual = 0;
-    pontos = 0;
+    contador = 0;
     botãoProximo.innerHTML = "Próximo";
+    pontuacao.style.display = "block";
     mostraPergunta();
+    atualizaPontos();
+}
+function redefinir(){
+    botãoProximo.style.display = "none";
+    while(botãoRespostas.firstChild){
+        botãoRespostas.removeChild(botãoRespostas.firstChild);
+    }
 }
 function mostraPergunta(){
     redefinir();
@@ -125,7 +134,7 @@ function mostraPergunta(){
     perguntaAtual.respostas.forEach(resposta => { 
         const botão = document.createElement("button");
         botão.innerHTML = resposta.texto;
-        botão.classList.add("botão")
+        botão.classList.add("botão");
         botãoRespostas.appendChild(botão);
         if(resposta.correção){
             botão.dataset.correção = resposta.correção;
@@ -134,11 +143,9 @@ function mostraPergunta(){
 
     });
 }
-function redefinir(){
-    botãoProximo.style.display = "none";
-    while(botãoRespostas.firstChild){
-        botãoRespostas.removeChild(botãoRespostas.firstChild);
-    }
+function atualizaPontos(){
+    const contadorPontos = document.getElementById("contador-pontos");
+    contadorPontos.textContent = contador;
 }
 //verifica se a resposta selecionada esta correta.
 function verificaResposta(a){
@@ -146,7 +153,8 @@ function verificaResposta(a){
     const estaCorreto = selectBtn.dataset.correção === "true"; 
     if(estaCorreto){
         selectBtn.classList.add("correto");
-        pontos++;
+        contador += 10; 
+        atualizaPontos();
     }else{
         selectBtn.classList.add("incorreto");
     }
@@ -164,10 +172,10 @@ function verificaResposta(a){
 //mostra os pontos ao final do jogo.
 function mostrePontos(){
     redefinir();
-    perguntasQuiz.innerHTML = `Você marcou ${pontos} de ${perguntas.length}!`;
+    perguntasQuiz.innerHTML = `Você marcou ${contador} Pontos!`;
     botãoProximo.innerHTML = "Jogar novamente"
     botãoProximo.style.display = "block";
-
+    pontuacao.style.display = "none";
 }
 function chamaProximaPergunta(){ 
     indexPerguntaAtual++;

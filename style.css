@@ -4,7 +4,8 @@ body{
   padding: 0;
  }
  header img{
-    width: 100%;
+    max-width: 100%;
+    height: auto;
 }
 nav{
   background-color: #FFF;
@@ -33,7 +34,15 @@ nav{
  .quiz h2{
    font-size: 18px;
    color:#1A1E3F;
-   font-weight: 300;   
+   font-weight: 300;  
+   float: left; 
+}
+/* Contador*/
+.pontos {
+  font-size: 18px;
+  float: right;
+  font-weight: bold;
+  color: #C00000;
 }
 /* Botões de Respostas */
  .botão{
